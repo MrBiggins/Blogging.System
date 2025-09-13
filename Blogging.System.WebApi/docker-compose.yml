@@ -1,0 +1,16 @@
+﻿version: "3.9"
+
+services:
+  blogging-system:
+    build:
+      context: .
+      dockerfile: Blogging.System.WebApi/Dockerfile
+    container_name: blogging.api
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_HOST_PATH=/usr/share/dotnet/dotnet

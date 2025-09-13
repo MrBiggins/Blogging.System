@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Blogging.System.WebApi/.vs
+/Blogging.System.WebApi/Blogging.System.Business.Logic/bin
+/Blogging.System.WebApi/Blogging.System.Business.Logic/obj
+/Blogging.System.WebApi/Blogging.System.Domain/bin
+/Blogging.System.WebApi/Blogging.System.Domain/obj
+/Blogging.System.WebApi/Blogging.System.Infrastructure/bin
+/Blogging.System.WebApi/Blogging.System.Infrastructure/obj
+/Blogging.System.WebApi/Blogging.System.Test/bin
+/Blogging.System.WebApi/Blogging.System.Test/obj
+/Blogging.System.WebApi/Blogging.System.WebApi/bin
+/Blogging.System.WebApi/Blogging.System.WebApi/obj
