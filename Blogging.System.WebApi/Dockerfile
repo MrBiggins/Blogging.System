@@ -1,8 +1,10 @@
-# Build stage (Linux SDK)
+
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-#COPY NuGet.Config ./
+RUN echo "Running tests..."
+RUN find . -name "*Tests.csproj" -o -name "*Test.csproj" | xargs -r dotnet test --no-restore --verbosity normal
+
 
 COPY ["Blogging.System.WebApi/Blogging.System.WebApi.csproj", "Blogging.System.WebApi/"]
 COPY ["Blogging.System.Business.Logic/Blogging.System.Business.Logic.csproj", "Blogging.System.Business.Logic/"]
@@ -19,7 +21,6 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "Blogging.System.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Final stage (Windows ASP.NET runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
