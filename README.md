@@ -40,3 +40,33 @@ Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) ins
 | 500         | Internal Server Error      |
 
 The API follows RESTful conventions. All endpoints return standard HTTP status codes to indicate the result of the operation.
+
+---
+
+## Supported Endpoints: PostController
+
+### Create Post
+`POST /post`
+
+**Request Body:**
+- `CreatePostCommand` (JSON or XML)
+
+**Response Codes:**
+| Status Code | Description                |
+|-------------|----------------------------|
+| 201         | Created - Post created     |
+| 500         | Internal Server Error      |
+
+---
+
+### Get Post by Id
+`GET /post/{id}`
+
+**Query Parameters:**
+- `includeAuthor` (bool, optional)
+
+**Response Codes:**
+| Status Code | Description                |
+|-------------|----------------------------|
+| 200         | OK - Post found            |
+| 404         | Not Found                  |
