@@ -18,7 +18,7 @@ namespace Blogging.System.Business.Logic.Handlers.Implementations {
             if (command == null) throw new ArgumentNullException(nameof(command));
 
             var authorDto = await _authorRepository.GetAuthorById(command.AuthorId);
-            if (authorDto == null) { throw new NotFoundException($"Author with: {command.AuthorId} not found"); }
+            if (authorDto == null) { throw new AuthorNotFoundException($"Author with: {command.AuthorId} not found"); }
 
             var postDto = new PostEntity(command.AuthorId, command.Title, command.Description, command.Content);
             var calculatedId = await _postRepository.AddPost(postDto);

@@ -19,7 +19,14 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
     <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="MSTest" Version="3.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blogging.System.Business.Logic\Blogging.System.Business.Logic.csproj" />
+    <ProjectReference Include="..\Blogging.System.Infrastructure\Blogging.System.Infrastructure.csproj" />
+    <ProjectReference Include="..\Blogging.System.WebApi\Blogging.System.WebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
