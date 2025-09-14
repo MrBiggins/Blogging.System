@@ -27,22 +27,6 @@ Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) ins
 
 ## WebAPI Documentation
 
-### Common Response Codes
-
-| Status Code | Description                |
-|-------------|----------------------------|
-| 200         | OK - Successful request    |
-| 201         | Created - Resource created |
-| 204         | No Content                 |
-| 400         | Bad Request                |
-| 401         | Unauthorized               |
-| 404         | Not Found                  |
-| 500         | Internal Server Error      |
-
-The API follows RESTful conventions. All endpoints return standard HTTP status codes to indicate the result of the operation.
-
----
-
 ## Supported Endpoints: PostController
 
 ### Create Post
