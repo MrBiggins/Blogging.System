@@ -1,5 +1,6 @@
 # Blogging System Web API
 
+
 ## Running with Docker Compose
 
 To build and run the application using Docker Compose, use the following commands in your terminal:
@@ -9,6 +10,8 @@ To build and run the application using Docker Compose, use the following command
 docker compose up --build
 ```
 This command will build the Docker images (if needed) and start all services defined in the `docker-compose.yml` file.
+
+**Note:** As part of the Docker build process, all tests are executed automatically. If any test fails, the build will stop and the application will not be started.
 
 ### Stop the application
 ```
