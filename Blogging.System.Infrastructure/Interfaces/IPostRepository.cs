@@ -3,6 +3,6 @@
 namespace Blogging.System.Infrastructure.Interfaces {
     public interface IPostRepository {
         Task<int> AddPost(PostEntity author);
-        Task<PostEntity> GetPostById(int id);
+        Task<PostEntity> GetPostById(int id, bool includeAuthor = false);
     }
 }

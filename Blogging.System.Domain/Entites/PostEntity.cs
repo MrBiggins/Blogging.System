@@ -3,14 +3,18 @@
         public int Id { get; private set; }
         public int AuthorId { get; init; }
         public string Title { get; init; }
-        public string Description { get; init; } 
-        public string Content { get; init; } 
+        public string Description { get; init; }
+        public string Content { get; init; }
+        public virtual AuthorEntity Author { get; init; }
 
-        public PostEntity(int authorId, string title, string description, string content) {
+        public PostEntity() { }
+
+        public PostEntity(int authorId, string title, string description, string content, AuthorEntity author = null) {
             AuthorId = authorId;
             Title = title;
             Description = description;
             Content = content;
+            Author = author;
         }
     }
 }

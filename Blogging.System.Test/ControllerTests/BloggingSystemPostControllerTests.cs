@@ -62,7 +62,7 @@ namespace Blogging.System.Test.ControllerTests {
             var result = await _controller.GetPost(999);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+            Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
         }
     }
 }

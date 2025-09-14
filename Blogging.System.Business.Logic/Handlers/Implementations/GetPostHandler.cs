@@ -14,7 +14,7 @@ namespace Blogging.System.Business.Logic.Handlers.Implementations {
         }
         public async Task<PostModel> HandleGetPostById(GetPostQuery query) {
 
-            var postDto = await _postRepository.GetPostById(query.Id);
+            var postDto = await _postRepository.GetPostById(query.Id, query.IncludeAuthor);
             if (postDto == null) { return null; }
 
             var postModel = new PostModel {
@@ -25,16 +25,13 @@ namespace Blogging.System.Business.Logic.Handlers.Implementations {
                 Content = postDto.Content
             };
 
-            if (query.IncludeAuthor) {
-                var authorDto = await _authorRepository.GetAuthorById(postDto.AuthorId);
-                if (authorDto != null) {
-                    postModel.Author = new AuthorModel
-                    {
-                        Id = authorDto.Id,
-                        Name = authorDto.Name,
-                        Surname = authorDto.Surname
-                    };
-                }
+            if (query.IncludeAuthor && postDto.Author != null) {
+                postModel.Author = new AuthorModel
+                {
+                    Id = postDto.Author.Id,
+                    Name = postDto.Author.Name,
+                    Surname = postDto.Author.Surname
+                };
             }
 
             return postModel;

@@ -12,21 +12,30 @@ namespace Blogging.System.Infrastructure.Extentions {
             ctx.Database.EnsureCreated();
 
             if (!ctx.Authors.Any()) {
-                ctx.Authors.AddRange(
+
+                var authors = new List<AuthorEntity>
+                {
                     new AuthorEntity("John", "Doe"),
                     new AuthorEntity("Jane", "Smith")
-                );
+                };
+                
+                ctx.Authors.AddRange(authors);
                 ctx.SaveChanges();
             }
 
             if (!ctx.Posts.Any()) {
-                var firstAuthorId = ctx.Authors.First().Id;
-                ctx.Posts.Add(new PostEntity(
-                    firstAuthorId,
-                    "Runtime Seeded Post",
-                    "Seeded at startup",
-                    "This post was added by SeedBlogData."
-                ));
+                var authors = ctx.Authors.ToList();
+                var johnId = authors.First(a => a.Name == "John").Id;
+                var janeId = authors.First(a => a.Name == "Jane").Id;
+                
+                var posts = new List<PostEntity>
+                {
+                    new PostEntity(johnId, "John's First Post", "Introduction post", "This is my first blog post!"),
+                    new PostEntity(johnId, "John's Second Post", "Follow-up post", "Thanks for reading my first post!"),
+                    new PostEntity(janeId, "Jane's Thoughts", "Technical insights", "Here are my thoughts on the latest tech trends...")
+                };
+                
+                ctx.Posts.AddRange(posts);
                 ctx.SaveChanges();
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Blogging.System.Domain.Entites;
 using Blogging.System.Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogging.System.Infrastructure.Repositories {
     public class PostRepository : IPostRepository {
@@ -16,8 +17,14 @@ namespace Blogging.System.Infrastructure.Repositories {
             return post.Id;
         }
 
-        public async Task<PostEntity> GetPostById(int id) {
-            return await _blogSystemDbContext.Posts.FindAsync(id);
+        public async Task<PostEntity> GetPostById(int id, bool includeAuthor = false) {
+            if (includeAuthor)
+                return await _blogSystemDbContext.Posts
+                    .Include(p => p.Author)
+                    .FirstOrDefaultAsync(p => p.Id == id);
+            else
+                return await _blogSystemDbContext.Posts
+                    .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

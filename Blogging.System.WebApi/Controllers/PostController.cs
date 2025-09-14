@@ -22,7 +22,7 @@ namespace Blogging.System.WebApi.Controllers {
         [HttpPost]
         [Consumes("application/json", "application/xml")]
         [ProducesResponseType(typeof(PostModel), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostCommand command) {
             
             var post = await _createPostHandler.HandlePostCreation(command);
@@ -39,7 +39,8 @@ namespace Blogging.System.WebApi.Controllers {
         public async Task<IActionResult> GetPost(int id, [FromQuery] bool includeAuthor = false) {
             var post = await _getPostHandler.HandleGetPostById(new GetPostQuery { Id = id, IncludeAuthor = includeAuthor });
             if (post == null) {
-                return NotFound();
+                _logger.LogWarning($"Post not found by id {id}");
+                return NotFound(new ProblemDetails { Title = "Post not found", Status = 404 });
             }
             return Ok(post);
         }

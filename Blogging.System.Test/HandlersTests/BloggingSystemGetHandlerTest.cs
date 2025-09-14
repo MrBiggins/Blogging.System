@@ -31,11 +31,10 @@ namespace Blogging.System.Test.HandlersTests {
             var postId = 1;
             var authorId = 2;
             var postDto = new PostEntity(authorId, "Test Title", "Test Description", "Test Content");
-
-            _postRepositoryMock.Setup(repo => repo.GetPostById(postId))
-                .ReturnsAsync(postDto);
-
             var query = new GetPostQuery { Id = postId, IncludeAuthor = false };
+
+            _postRepositoryMock.Setup(repo => repo.GetPostById(postId, query.IncludeAuthor))
+                .ReturnsAsync(postDto);
 
             // Act
             var result = await _handler.HandleGetPostById(query);
@@ -56,13 +55,13 @@ namespace Blogging.System.Test.HandlersTests {
             // Arrange
             var postId = 1;
             var authorId = 2;
-            var postDto = new PostEntity(authorId, "Test Title", "Test Description", "Test Content");
             var authorDto = new AuthorEntity("John", "Doe");
+            var postDto = new PostEntity(authorId, "Test Title", "Test Description", "Test Content", authorDto);
+         
+
             var query = new GetPostQuery { Id = postId, IncludeAuthor = true };
 
-            _authorRepositoryMock.Setup(repo => repo.GetAuthorById(authorId))
-                .ReturnsAsync(authorDto);
-            _postRepositoryMock.Setup(repo => repo.GetPostById(postId))
+            _postRepositoryMock.Setup(repo => repo.GetPostById(postId, query.IncludeAuthor))
                 .ReturnsAsync(postDto);
 
 
@@ -87,7 +86,7 @@ namespace Blogging.System.Test.HandlersTests {
             var postId = 1;
 
             var query = new GetPostQuery { Id = postId, IncludeAuthor = false };
-            _postRepositoryMock.Setup(repo => repo.GetPostById(postId))
+            _postRepositoryMock.Setup(repo => repo.GetPostById(postId, query.IncludeAuthor))
                 .ReturnsAsync((PostEntity)null);
             // Act
             var result = await _handler.HandleGetPostById(query);
