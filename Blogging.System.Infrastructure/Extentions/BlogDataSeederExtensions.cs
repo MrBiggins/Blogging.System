@@ -15,8 +15,8 @@ namespace Blogging.System.Infrastructure.Extentions {
 
                 var authors = new List<AuthorEntity>
                 {
-                    new AuthorEntity("John", "Doe"),
-                    new AuthorEntity("Jane", "Smith")
+                    new AuthorEntity("Deniss", "Timcenko"),
+                    new AuthorEntity("John", "Doe")
                 };
                 
                 ctx.Authors.AddRange(authors);
@@ -25,14 +25,14 @@ namespace Blogging.System.Infrastructure.Extentions {
 
             if (!ctx.Posts.Any()) {
                 var authors = ctx.Authors.ToList();
-                var johnId = authors.First(a => a.Name == "John").Id;
-                var janeId = authors.First(a => a.Name == "Jane").Id;
+                var johnId = authors.First(a => a.Name == "Deniss").Id;
+                var janeId = authors.First(a => a.Name == "John").Id;
                 
                 var posts = new List<PostEntity>
                 {
-                    new PostEntity(johnId, "John's First Post", "Introduction post", "This is my first blog post!"),
-                    new PostEntity(johnId, "John's Second Post", "Follow-up post", "Thanks for reading my first post!"),
-                    new PostEntity(janeId, "Jane's Thoughts", "Technical insights", "Here are my thoughts on the latest tech trends...")
+                    new PostEntity(johnId, "Denis's First Post", "Introduction post", "This is my first blog post!"),
+                    new PostEntity(johnId, "Denis's Second Post", "Follow-up post", "Thanks for reading my first post!"),
+                    new PostEntity(janeId, "John's Thoughts", "Technical insights", "Here are my thoughts on the latest tech trends...")
                 };
                 
                 ctx.Posts.AddRange(posts);

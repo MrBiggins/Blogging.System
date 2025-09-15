@@ -1,7 +1,9 @@
-﻿using Blogging.System.Business.Logic.Handlers.Interfaces;
+﻿using Blogging.System.Business.Logic.Commands;
+using Blogging.System.Business.Logic.Handlers.Interfaces;
 using Blogging.System.Business.Logic.Models;
 using Blogging.System.Business.Logic.Queries;
 using Blogging.System.WebApi.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -63,6 +65,39 @@ namespace Blogging.System.Test.ControllerTests {
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
+            var notFoundResult = result as NotFoundObjectResult;
+            Assert.IsNotNull(notFoundResult);
+
+            Assert.IsInstanceOfType(notFoundResult.Value, typeof(ProblemDetails));
+            var problemDetails = notFoundResult.Value as ProblemDetails;
+            Assert.IsNotNull(problemDetails);
+
+            Assert.AreEqual("Post not found", problemDetails.Title);
+            Assert.AreEqual(404, problemDetails.Status);
+        }
+
+        [TestMethod]
+        public async Task CreatePostReturn500Error() {
+            //Arrange
+            _createHandlerMock.Setup(h => h.HandlePostCreation(It.IsAny<CreatePostCommand>()))
+                .ReturnsAsync((PostModel)null);
+
+            var command = new CreatePostCommand
+            {
+                AuthorId = 1,
+                Title = "Test Title",
+                Description = "Test Description",
+                Content = "Test Content with more than 10 characters"
+            };
+
+            // Act
+            var result = await _controller.CreatePost(command);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(StatusCodeResult));
+            var statusCodeResult = (StatusCodeResult)result;
+            Assert.AreEqual(StatusCodes.Status500InternalServerError, statusCodeResult.StatusCode);
+
         }
     }
 }
