@@ -34,6 +34,7 @@ namespace Blogging.System.WebApi.Controllers {
         }
 
         [HttpGet("{id:int}")]
+        [Consumes("application/json", "application/xml")]
         [ProducesResponseType(typeof(PostModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPost(int id, [FromQuery] bool includeAuthor = false) {
