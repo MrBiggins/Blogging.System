@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Blogging.System.WebApi.Controllers {
     [Route("post")]
     [ApiController]
-    [Produces("application/json", "application/xml")]
     public class PostController : ControllerBase {
         private readonly IGetPostHandler _getPostHandler;
         private readonly ILogger<PostController> _logger;
@@ -21,6 +20,7 @@ namespace Blogging.System.WebApi.Controllers {
 
         [HttpPost]
         [Consumes("application/json", "application/xml")]
+        [Produces("application/json", "application/xml")]
         [ProducesResponseType(typeof(PostModel), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostCommand command) {
@@ -34,7 +34,7 @@ namespace Blogging.System.WebApi.Controllers {
         }
 
         [HttpGet("{id:int}")]
-        [Consumes("application/json", "application/xml")]
+        [Produces("application/json", "application/xml")]
         [ProducesResponseType(typeof(PostModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPost(int id, [FromQuery] bool includeAuthor = false) {
