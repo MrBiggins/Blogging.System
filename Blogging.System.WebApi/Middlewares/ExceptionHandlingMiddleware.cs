@@ -15,6 +15,7 @@ namespace Blogging.System.WebApi.Middlewares {
             try {
                 await _next(context);
             } catch (Exception ex) {
+                _logger.LogError(ex.Message, ex);   
                 context.Response.ContentType = "application/problem+json";
                 context.Response.StatusCode = ex is AuthorNotFoundException ? StatusCodes.Status404NotFound : StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsJsonAsync(new ProblemDetails
